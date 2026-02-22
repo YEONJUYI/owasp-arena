@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>SecureShop - A02 챌린지</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0d1117; color: #c9d1d9; font-family: 'Courier New', monospace; }
+
+    nav {
+      background: #161b22;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #30363d;
+    }
+    nav .logo { color: #58a6ff; font-size: 1.2rem; font-weight: bold; }
+    nav a { color: #8b949e; text-decoration: none; margin-left: 24px; font-size: 0.9rem; }
+    nav a:hover { color: #58a6ff; }
+
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+    }
+    .hero h1 { font-size: 2.5rem; color: #f0f6fc; margin-bottom: 16px; }
+    .hero p { color: #8b949e; font-size: 1rem; max-width: 500px; margin: 0 auto 32px; line-height: 1.6; }
+
+    .badge {
+      display: inline-block;
+      background: #1f2937;
+      border: 1px solid #f59e0b;
+      color: #f59e0b;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      margin-bottom: 24px;
+    }
+
+    .cards {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      padding: 0 32px 60px;
+    }
+    .card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 24px;
+      width: 200px;
+      text-align: center;
+    }
+    .card .icon { font-size: 2rem; margin-bottom: 12px; }
+    .card h3 { font-size: 0.95rem; color: #f0f6fc; margin-bottom: 8px; }
+    .card p { font-size: 0.8rem; color: #8b949e; }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #484f58;
+      font-size: 0.75rem;
+      border-top: 1px solid #21262d;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">🛡️ SecureShop</span>
+  <div>
+    <a href="/">홈</a>
+    <a href="/about">소개</a>
+    <!-- TODO: 배포 전에 지울 것 - /admin 관리자 페이지 테스트 필요 -->
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="badge">A02 · Security Misconfiguration</div>
+  <h1>SecureShop에 오신 것을 환영합니다</h1>
+  <p>완벽하게 안전한 쇼핑몰입니다.<br/>볼 것 없어요. 그냥 지나가세요.</p>
+</div>
+
+<div class="cards">
+  <div class="card">
+    <div class="icon">🔒</div>
+    <h3>안전함</h3>
+    <p>엔터프라이즈급 보안... 아마도요.</p>
+  </div>
+  <div class="card">
+    <div class="icon">⚡</div>
+    <h3>빠름</h3>
+    <p>엄청나게 빠른 성능을 자랑합니다.</p>
+  </div>
+  <div class="card">
+    <div class="icon">📦</div>
+    <h3>신뢰성</h3>
+    <p>99.9% 가동률을 보장합니다.</p>
+  </div>
+</div>
+
+<footer>
+  SecureShop v1.0.0 · 나쁜 보안 습관으로 만들어진 사이트
+</footer>
+
+</body>
+</html>

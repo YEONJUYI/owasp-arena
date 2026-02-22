@@ -3,15 +3,28 @@ version: '3.8'
 services:
   a01-broken-access:
     build: ./challenges/a01-broken-access
+    container_name: a01-broken-access
     ports:
-      - "8001:5000"
-    container_name: owasp-a01
+      - "5000:5000"
     restart: unless-stopped
-    
-  # 나머지 챌린지는 만들면서 추가
-  # a02-misconfiguration:
-  #   build: ./challenges/a02-misconfiguration
-  #   ports:
-  #     - "8002:5000"
-  #   container_name: owasp-a02
-  #   restart: unless-stopped
+
+  a02-misconfiguration:
+    build: ./challenges/a02-misconfiguration
+    container_name: a02-misconfiguration
+    ports:
+      - "5001:5001"
+    restart: unless-stopped
+
+  a03-supply-chain:
+    build: ./challenges/a03-supply-chain
+    container_name: a03-supply-chain
+    ports:
+      - "5002:5002"
+    restart: unless-stopped
+
+  a04-cryptographic-failures:
+    build: ./challenges/a04-cryptographic-failures
+    container_name: a04-cryptographic-failures
+    ports:
+      - "5003:5003"
+    restart: unless-stopped

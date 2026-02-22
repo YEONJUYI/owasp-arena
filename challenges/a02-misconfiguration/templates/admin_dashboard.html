@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>관리자 대시보드 - SecureShop</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0d1117; color: #c9d1d9; font-family: 'Courier New', monospace; }
+
+    nav {
+      background: #161b22;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #30363d;
+    }
+    nav .logo { color: #f85149; font-size: 1rem; font-weight: bold; }
+    nav span { color: #8b949e; font-size: 0.8rem; }
+
+    .container { max-width: 800px; margin: 60px auto; padding: 0 24px; }
+
+    .flag-box {
+      background: #0f2a1a;
+      border: 1px solid #238636;
+      border-radius: 10px;
+      padding: 32px;
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .flag-box h2 { color: #3fb950; font-size: 1.2rem; margin-bottom: 16px; }
+    .flag-box .flag {
+      background: #0d1117;
+      border: 1px dashed #238636;
+      padding: 14px 20px;
+      border-radius: 6px;
+      color: #3fb950;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+      word-break: break-all;
+    }
+
+    .info {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 24px;
+    }
+    .info h3 { color: #f0f6fc; margin-bottom: 16px; font-size: 0.95rem; }
+    .info ul { list-style: none; }
+    .info li {
+      padding: 10px 0;
+      border-bottom: 1px solid #21262d;
+      font-size: 0.85rem;
+      color: #8b949e;
+    }
+    .info li:last-child { border-bottom: none; }
+    .info li span { color: #f85149; }
+    .info li span.fix { color: #3fb950; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">⚠️ 관리자 대시보드</span>
+  <span>로그인: admin</span>
+</nav>
+
+<div class="container">
+  <div class="flag-box">
+    <h2>🚩 축하합니다! 플래그를 찾았습니다!</h2>
+    <div class="flag">{{ flag }}</div>
+  </div>
+
+  <div class="info">
+    <h3>🔍 어떤 취약점이 있었나요?</h3>
+    <ul>
+      <li><span>[취약점]</span> robots.txt에 관리자 경로(/admin)가 노출되어 있었습니다.</li>
+      <li><span>[취약점]</span> 기본 크리덴셜(admin:admin)이 변경되지 않았습니다.</li>
+      <li><span>[취약점]</span> /config 엔드포인트에서 내부 설정 정보가 노출되었습니다.</li>
+      <li><span class="fix">[대응방안]</span> robots.txt에 민감한 경로를 절대 포함하지 마세요.</li>
+      <li><span class="fix">[대응방안]</span> 배포 전 반드시 기본 비밀번호를 변경하세요.</li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>NodeShop - A03 챌린지</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0d1117; color: #c9d1d9; font-family: 'Courier New', monospace; }
+
+    nav {
+      background: #161b22;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #30363d;
+    }
+    nav .logo { color: #58a6ff; font-size: 1.2rem; font-weight: bold; }
+    nav a { color: #8b949e; text-decoration: none; margin-left: 24px; font-size: 0.9rem; }
+    nav a:hover { color: #58a6ff; }
+
+    .hero {
+      text-align: center;
+      padding: 80px 20px 40px;
+    }
+    .badge {
+      display: inline-block;
+      background: #1f2937;
+      border: 1px solid #a855f7;
+      color: #a855f7;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      margin-bottom: 20px;
+    }
+    .hero h1 { font-size: 2.2rem; color: #f0f6fc; margin-bottom: 14px; }
+    .hero p { color: #8b949e; font-size: 0.95rem; max-width: 480px; margin: 0 auto; line-height: 1.7; }
+
+    .section {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+    .section h2 { color: #f0f6fc; font-size: 1rem; margin-bottom: 16px; }
+
+    .dep-list {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .dep-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #21262d;
+      font-size: 0.85rem;
+    }
+    .dep-item:last-child { border-bottom: none; }
+    .dep-name { color: #58a6ff; }
+    .dep-ver { color: #8b949e; }
+    .dep-status {
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-size: 0.7rem;
+    }
+    .safe { background: #0f2a1a; color: #3fb950; border: 1px solid #238636; }
+    .warn { background: #2d1e00; color: #f59e0b; border: 1px solid #d97706; }
+    .danger { background: #3d1f1f; color: #f85149; border: 1px solid #f85149; }
+
+    .terminal {
+      background: #010409;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 24px;
+      font-size: 0.8rem;
+      line-height: 1.8;
+    }
+    .terminal .prompt { color: #3fb950; }
+    .terminal .cmd { color: #f0f6fc; }
+    .terminal .out { color: #8b949e; }
+    .terminal .highlight { color: #f59e0b; }
+
+    .hint-box {
+      margin-top: 24px;
+      background: #1c2128;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-size: 0.8rem;
+      color: #8b949e;
+    }
+    .hint-box code {
+      background: #0d1117;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #58a6ff;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #484f58;
+      font-size: 0.75rem;
+      border-top: 1px solid #21262d;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">📦 NodeShop</span>
+  <div>
+    <a href="/">홈</a>
+    <a href="/package.json">package.json</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="badge">A03 · 소프트웨어 공급망 취약점</div>
+  <h1>NodeShop</h1>
+  <p>오픈소스 쇼핑몰 플랫폼입니다.<br/>의존성 패키지는 항상 최신으로 유지하고 있어요!</p>
+</div>
+
+<div class="section">
+  <h2>📦 설치된 패키지 현황</h2>
+  <div class="dep-list">
+    <div class="dep-item">
+      <span class="dep-name">express</span>
+      <span class="dep-ver">^4.18.2</span>
+      <span class="dep-status safe">✓ 안전</span>
+    </div>
+    <div class="dep-item">
+      <span class="dep-name">lodash</span>
+      <span class="dep-ver">^4.17.15</span>
+      <span class="dep-status warn">⚠ 구버전</span>
+    </div>
+    <div class="dep-item">
+      <span class="dep-name">ld4sh</span>
+      <span class="dep-ver">^1.2.0</span>
+      <span class="dep-status danger">✗ 미확인</span>
+    </div>
+    <div class="dep-item">
+      <span class="dep-name">axios</span>
+      <span class="dep-ver">^1.4.0</span>
+      <span class="dep-status safe">✓ 안전</span>
+    </div>
+  </div>
+
+  <div class="terminal">
+    <div><span class="prompt">$</span> <span class="cmd">cat package.json</span></div>
+    <div class="out">  "scripts": {</div>
+    <div class="out">    "start": "node index.js",</div>
+    <div class="out highlight">    "telemetry": "node_modules/.bin/ld4sh --key=ld4sh-t3lemetry-k3y-9x2m"</div>
+    <div class="out">  }</div>
+    <br/>
+    <div class="out">⚠️  경고: 알 수 없는 패키지 "ld4sh" 가 의존성에서 발견되었습니다.</div>
+  </div>
+
+  <div class="hint-box">
+    💡 <strong>힌트:</strong> <code>/package.json</code> 을 분석해보세요.
+    수상한 패키지가 텔레메트리 엔드포인트를 열어놓았을 수도 있습니다.
+    <code>POST /api/ld4sh/telemetry</code> — 어떤 헤더가 필요할까요?
+  </div>
+</div>
+
+<footer>
+  NodeShop v1.0.0 · 완전히 안전한 오픈소스 패키지로 구동됩니다
+</footer>
+
+</body>
+</html>

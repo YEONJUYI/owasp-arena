@@ -3,11 +3,12 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 
-# CORS 설정 - Vercel URL 허용
+# CORS 설정 - Vercel과 Render 허용
 CORS(app, origins=[
     "https://owasp-arena-gv0nec08y-qu1cks1lv37s-projects.vercel.app",
-    "https://*.vercel.app",  # 모든 Vercel 프리뷰 URL 허용
-    "http://localhost:3000"  # 로컬 테스트용
+    "https://*.vercel.app",
+    "http://localhost:3000",
+    "https://owasp-arena.onrender.com"  # Render 자기 자신도 추가
 ])
 
 # 사용자 데이터
