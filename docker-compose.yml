@@ -28,3 +28,45 @@ services:
     ports:
       - "5003:5003"
     restart: unless-stopped
+
+  a05-sql-injection:
+    build: ./challenges/a05-SQL-injection
+    container_name: a05-sql-injection
+    ports:
+      - "5004:5004"
+    restart: unless-stopped
+
+  a06-insecure-design:
+    build: ./challenges/a06-insecure-design
+    container_name: a06-insecure-design
+    ports:
+      - "5005:5005"
+    restart: unless-stopped
+
+  a07-authentication-failures:
+    build: ./challenges/a07-Authentication-Failures
+    container_name: a07-authentication-failures
+    ports:
+      - "5006:5006"
+    restart: unless-stopped
+
+  a08-data-integrity-failures:
+    build: ./challenges/a08-Data-Integrity-Failures
+    container_name: a08-data-integrity-failures
+    ports:
+      - "5007:5007"
+    restart: unless-stopped
+
+  a09-logging-failures:
+    build: ./challenges/a09-Logging-Failures
+    container_name: a09-logging-failures
+    ports:
+      - "5008:5008"
+    restart: unless-stopped
+
+  a10-exception:
+    build: ./challenges/A10-Mishandling-of-Exceptional-Conditions
+    container_name: a10-exception
+    ports:
+      - "5009:5009"
+    restart: unless-stopped
