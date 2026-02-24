@@ -1,9 +1,9 @@
-from flask import Flask, render_template, request, make_response, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for
 from flask_cors import CORS
-import base64
-import json
+import hashlib
 
 app = Flask(__name__)
+app.secret_key = 'crypto_secret'
 
 CORS(app, origins=[
     "https://*.vercel.app",
@@ -12,23 +12,14 @@ CORS(app, origins=[
 
 FLAG = 'OWASP{b4s3_64_1s_n0t_3ncrypt10n}'
 
-# 취약점: 비밀번호를 평문으로 저장
+# 취약점: 비밀번호를 MD5로만 해싱 (salt 없음, 취약한 알고리즘)
 USERS = {
-    'user1': 'password123',
-    'admin': 'superpassword'
+    'user1': hashlib.md5('password123'.encode()).hexdigest(),   # 482c811da5d5b4bc6d497ffa98491e38
+    'admin': hashlib.md5('letmein'.encode()).hexdigest(),       # 0d107d09f5bbe40cade3de5c71e9e9b7
 }
 
-def make_cookie(username, role):
-    # 취약점: Base64는 암호화가 아닌 인코딩 - 누구나 디코딩/변조 가능
-    payload = json.dumps({'user': username, 'role': role})
-    return base64.b64encode(payload.encode()).decode()
-
-def parse_cookie(cookie):
-    try:
-        payload = base64.b64decode(cookie.encode()).decode()
-        return json.loads(payload)
-    except:
-        return None
+def md5(s):
+    return hashlib.md5(s.encode()).hexdigest()
 
 @app.route('/')
 def index():
@@ -40,34 +31,40 @@ def login():
         username = request.form.get('username')
         password = request.form.get('password')
 
-        if username in USERS and USERS[username] == password:
-            role = 'admin' if username == 'admin' else 'user'
-            cookie = make_cookie(username, role)
+        if username in USERS and USERS[username] == md5(password):
+            session['user'] = username
+            return redirect(url_for('dashboard'))
 
-            resp = make_response(redirect(url_for('dashboard')))
-            # 취약점: 민감한 권한 정보를 Base64 인코딩만 해서 쿠키에 저장
-            resp.set_cookie('session', cookie, httponly=False)
-            return resp
-        else:
-            return render_template('login.html', error='아이디 또는 비밀번호가 틀렸습니다.')
-
+        return render_template('login.html', error='아이디 또는 비밀번호가 틀렸습니다.')
     return render_template('login.html')
 
 @app.route('/dashboard')
 def dashboard():
-    cookie = request.cookies.get('session')
-    if not cookie:
+    if not session.get('user'):
         return redirect(url_for('login'))
+    return render_template('dashboard.html', user=session['user'])
 
-    data = parse_cookie(cookie)
-    if not data:
+# 취약점: 회원 목록 API가 인증 없이 노출 + MD5 해시 그대로 반환
+@app.route('/api/users')
+def users():
+    from flask import jsonify
+    return jsonify([
+        {'id': 1, 'username': 'user1', 'password_hash': USERS['user1'], 'role': 'user'},
+        {'id': 2, 'username': 'admin', 'password_hash': USERS['admin'], 'role': 'admin'},
+    ])
+
+@app.route('/admin')
+def admin():
+    if not session.get('user'):
         return redirect(url_for('login'))
+    if session['user'] != 'admin':
+        return render_template('admin.html', error='관리자만 접근 가능합니다.')
+    return render_template('admin.html', flag=FLAG)
 
-    # 취약점: 변조된 쿠키를 검증 없이 신뢰
-    if data.get('role') == 'admin':
-        return render_template('admin.html', flag=FLAG, user=data['user'])
-
-    return render_template('dashboard.html', user=data['user'], cookie=cookie)
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5003, debug=False)

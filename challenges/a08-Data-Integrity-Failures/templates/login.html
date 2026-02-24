@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <title>로그인 - SerialShop</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      background:#0d1117; color:#c9d1d9;
+      font-family:'Courier New',monospace;
+      display:flex; justify-content:center;
+      align-items:center; min-height:100vh;
+    }
+    .box {
+      background:#161b22; border:1px solid #30363d;
+      border-radius:10px; padding:40px;
+      width:100%; max-width:400px;
+    }
+    .box h2 { color:#f0f6fc; font-size:1.3rem; margin-bottom:8px; text-align:center; }
+    .box p { color:#8b949e; font-size:0.8rem; text-align:center; margin-bottom:28px; }
+    label { display:block; font-size:0.8rem; color:#8b949e; margin-bottom:6px; }
+    input[type="text"], input[type="password"] {
+      width:100%; padding:10px 14px;
+      background:#0d1117; border:1px solid #30363d;
+      border-radius:6px; color:#f0f6fc;
+      font-family:'Courier New',monospace; font-size:0.9rem;
+      margin-bottom:18px; outline:none;
+    }
+    input:focus { border-color:#06b6d4; }
+    button {
+      width:100%; padding:10px; background:#06b6d4;
+      border:none; border-radius:6px; color:#0d1117;
+      font-size:0.9rem; font-family:'Courier New',monospace;
+      font-weight:bold; cursor:pointer;
+    }
+    button:hover { background:#0891b2; }
+    .error {
+      background:#3d1f1f; border:1px solid #f85149;
+      color:#f85149; padding:10px 14px;
+      border-radius:6px; font-size:0.8rem; margin-bottom:18px;
+    }
+    .hint {
+      margin-top:20px; padding:12px 14px;
+      background:#1c2128; border:1px solid #30363d;
+      border-radius:6px; font-size:0.75rem; color:#8b949e;
+    }
+    .hint code { background:#0d1117; padding:2px 6px; border-radius:4px; color:#06b6d4; }
+  </style>
+</head>
+<body>
+<div class="box">
+  <h2>🛒 SerialShop 로그인</h2>
+  <p>계정에 로그인하세요.</p>
+  {% if error %}
+  <div class="error">⚠️ {{ error }}</div>
+  {% endif %}
+  <form method="POST" action="/login">
+    <label>아이디</label>
+    <input type="text" name="username" placeholder="아이디 입력" autocomplete="off"/>
+    <label>비밀번호</label>
+    <input type="password" name="password" placeholder="비밀번호 입력"/>
+    <button type="submit">로그인 →</button>
+  </form>
+  <div class="hint">
+    💡 테스트 계정: <code>user1</code> / <code>password123</code>
+  </div>
+</div>
+</body>
+</html>

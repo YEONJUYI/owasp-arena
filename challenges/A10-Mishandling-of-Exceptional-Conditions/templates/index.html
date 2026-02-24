@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <title>ErrorShop - A10 챌린지</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#0d1117; color:#c9d1d9; font-family:'Courier New',monospace; }
+    nav {
+      background:#161b22; padding:16px 32px;
+      display:flex; justify-content:space-between; align-items:center;
+      border-bottom:1px solid #30363d;
+    }
+    nav .logo { color:#f97316; font-size:1.2rem; font-weight:bold; }
+    nav a { color:#8b949e; text-decoration:none; margin-left:24px; font-size:0.9rem; }
+    nav a:hover { color:#f97316; }
+    .hero { text-align:center; padding:60px 20px 40px; }
+    .badge {
+      display:inline-block; background:#1f2937;
+      border:1px solid #f97316; color:#f97316;
+      padding:4px 12px; border-radius:9999px;
+      font-size:0.75rem; margin-bottom:20px;
+    }
+    .hero h1 { font-size:2.2rem; color:#f0f6fc; margin-bottom:14px; }
+    .hero p { color:#8b949e; font-size:0.95rem; max-width:480px; margin:0 auto; line-height:1.7; }
+    .section { max-width:800px; margin:40px auto; padding:0 24px 60px; }
+    .section h2 { color:#f0f6fc; font-size:1rem; margin-bottom:16px; }
+    .product-grid {
+      display:grid; grid-template-columns:repeat(3, 1fr);
+      gap:16px; margin-bottom:24px;
+    }
+    .product-card {
+      background:#161b22; border:1px solid #30363d;
+      border-radius:8px; padding:20px; text-align:center;
+      text-decoration:none; transition:border-color 0.2s;
+    }
+    .product-card:hover { border-color:#f97316; }
+    .product-card .icon { font-size:2rem; margin-bottom:10px; }
+    .product-card .name { color:#f0f6fc; font-size:0.9rem; margin-bottom:6px; }
+    .product-card .price { color:#f97316; font-size:0.85rem; }
+    .hint-box {
+      background:#1c2128; border:1px solid #30363d;
+      border-radius:8px; padding:16px 20px;
+      font-size:0.8rem; color:#8b949e; line-height:1.8;
+    }
+    .hint-box code {
+      background:#0d1117; padding:2px 6px;
+      border-radius:4px; color:#f97316;
+    }
+    footer {
+      text-align:center; padding:20px; color:#484f58;
+      font-size:0.75rem; border-top:1px solid #21262d;
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <span class="logo">🛒 ErrorShop</span>
+  <div><a href="/">홈</a></div>
+</nav>
+<div class="hero">
+  <div class="badge">A10 · Mishandling of Exceptional Conditions</div>
+  <h1>ErrorShop</h1>
+  <p>다양한 상품을 판매하는 쇼핑몰입니다.<br/>에러가 발생하면 어떤 정보가 노출될까요?</p>
+</div>
+<div class="section">
+  <h2>🛒 상품 목록</h2>
+  <div class="product-grid">
+    {% for p in products %}
+    <a href="/product?id={{ p[0] }}" class="product-card">
+      <div class="icon">{{ '💻' if '노트북' in p[1] else '🖱️' if '마우스' in p[1] else '⌨️' }}</div>
+      <div class="name">{{ p[1] }}</div>
+      <div class="price">{{ '{:,}'.format(p[2]|int) }}원</div>
+    </a>
+    {% endfor %}
+  </div>
+  <div class="hint-box">
+    💡 힌트: <code>/product?id=</code> 파라미터에 예상치 못한 값을 입력하면 어떻게 될까요?<br/>
+    서버가 에러를 어떻게 처리하는지 확인해보세요.
+  </div>
+</div>
+<footer>ErrorShop v1.0.0 · 예외 처리를 제대로 하지 않는 쇼핑몰</footer>
+</body>
+</html>

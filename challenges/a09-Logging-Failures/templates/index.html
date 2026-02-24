@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <title>LogBank - A09 챌린지</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#0d1117; color:#c9d1d9; font-family:'Courier New',monospace; }
+    nav {
+      background:#161b22; padding:16px 32px;
+      display:flex; justify-content:space-between; align-items:center;
+      border-bottom:1px solid #30363d;
+    }
+    nav .logo { color:#22c55e; font-size:1.2rem; font-weight:bold; }
+    nav a { color:#8b949e; text-decoration:none; margin-left:24px; font-size:0.9rem; }
+    nav a:hover { color:#22c55e; }
+    .hero { text-align:center; padding:80px 20px; }
+    .badge {
+      display:inline-block; background:#1f2937;
+      border:1px solid #22c55e; color:#22c55e;
+      padding:4px 12px; border-radius:9999px;
+      font-size:0.75rem; margin-bottom:20px;
+    }
+    .hero h1 { font-size:2.2rem; color:#f0f6fc; margin-bottom:14px; }
+    .hero p { color:#8b949e; font-size:0.95rem; max-width:480px; margin:0 auto 32px; line-height:1.7; }
+    .btn {
+      display:inline-block; background:#22c55e; color:#0d1117;
+      padding:12px 28px; border-radius:6px; text-decoration:none;
+      font-weight:bold; font-size:0.9rem;
+    }
+    .btn:hover { background:#16a34a; }
+    .features {
+      display:flex; justify-content:center; gap:20px;
+      flex-wrap:wrap; padding:0 32px 60px;
+    }
+    .feature {
+      background:#161b22; border:1px solid #30363d;
+      border-radius:8px; padding:24px; width:200px; text-align:center;
+    }
+    .feature .icon { font-size:2rem; margin-bottom:12px; }
+    .feature h3 { font-size:0.95rem; color:#f0f6fc; margin-bottom:8px; }
+    .feature p { font-size:0.8rem; color:#8b949e; }
+    footer {
+      text-align:center; padding:20px; color:#484f58;
+      font-size:0.75rem; border-top:1px solid #21262d;
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <span class="logo">📋 LogBank</span>
+  <div>
+    <a href="/">홈</a>
+    <a href="/login">로그인</a>
+  </div>
+</nav>
+<div class="hero">
+  <div class="badge">A09 · Logging & Monitoring Failures</div>
+  <h1>LogBank</h1>
+  <p>모든 활동을 꼼꼼히 로깅합니다.<br/>로그가 안전하게 관리되고 있을까요?</p>
+  <a href="/login" class="btn">로그인하기 →</a>
+</div>
+<div class="features">
+  <div class="feature">
+    <div class="icon">📋</div>
+    <h3>상세 로깅</h3>
+    <p>모든 활동을 빠짐없이 기록합니다.</p>
+  </div>
+  <div class="feature">
+    <div class="icon">🔍</div>
+    <h3>모니터링</h3>
+    <p>실시간 시스템 상태 모니터링</p>
+  </div>
+  <div class="feature">
+    <div class="icon">📊</div>
+    <h3>분석</h3>
+    <p>로그 데이터 분석 및 통계</p>
+  </div>
+</div>
+<footer>LogBank v1.0.0 · 완벽한 보안을 자랑하는 로깅 서비스</footer>
+</body>
+</html>

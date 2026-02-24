@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <title>SerialShop - A08 챌린지</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#0d1117; color:#c9d1d9; font-family:'Courier New',monospace; }
+    nav {
+      background:#161b22; padding:16px 32px;
+      display:flex; justify-content:space-between; align-items:center;
+      border-bottom:1px solid #30363d;
+    }
+    nav .logo { color:#06b6d4; font-size:1.2rem; font-weight:bold; }
+    nav a { color:#8b949e; text-decoration:none; margin-left:24px; font-size:0.9rem; }
+    nav a:hover { color:#06b6d4; }
+    .hero { text-align:center; padding:80px 20px; }
+    .badge {
+      display:inline-block; background:#1f2937;
+      border:1px solid #06b6d4; color:#06b6d4;
+      padding:4px 12px; border-radius:9999px;
+      font-size:0.75rem; margin-bottom:20px;
+    }
+    .hero h1 { font-size:2.2rem; color:#f0f6fc; margin-bottom:14px; }
+    .hero p { color:#8b949e; font-size:0.95rem; max-width:480px; margin:0 auto 32px; line-height:1.7; }
+    .btn {
+      display:inline-block; background:#06b6d4; color:#0d1117;
+      padding:12px 28px; border-radius:6px; text-decoration:none;
+      font-weight:bold; font-size:0.9rem;
+    }
+    .btn:hover { background:#0891b2; }
+    .features {
+      display:flex; justify-content:center; gap:20px;
+      flex-wrap:wrap; padding:0 32px 60px;
+    }
+    .feature {
+      background:#161b22; border:1px solid #30363d;
+      border-radius:8px; padding:24px; width:200px; text-align:center;
+    }
+    .feature .icon { font-size:2rem; margin-bottom:12px; }
+    .feature h3 { font-size:0.95rem; color:#f0f6fc; margin-bottom:8px; }
+    .feature p { font-size:0.8rem; color:#8b949e; }
+    footer {
+      text-align:center; padding:20px; color:#484f58;
+      font-size:0.75rem; border-top:1px solid #21262d;
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <span class="logo">🛒 SerialShop</span>
+  <div>
+    <a href="/">홈</a>
+    <a href="/login">로그인</a>
+  </div>
+</nav>
+<div class="hero">
+  <div class="badge">A08 · Software & Data Integrity Failures</div>
+  <h1>SerialShop</h1>
+  <p>세션 데이터를 안전하게 직렬화합니다.<br/>정말 안전할까요?</p>
+  <a href="/login" class="btn">로그인하기 →</a>
+</div>
+<div class="features">
+  <div class="feature">
+    <div class="icon">📦</div>
+    <h3>직렬화</h3>
+    <p>세션 데이터를 효율적으로 직렬화</p>
+  </div>
+  <div class="feature">
+    <div class="icon">🔄</div>
+    <h3>역직렬화</h3>
+    <p>빠른 세션 복원</p>
+  </div>
+  <div class="feature">
+    <div class="icon">🛡️</div>
+    <h3>무결성</h3>
+    <p>데이터 무결성 보장... 아마도</p>
+  </div>
+</div>
+<footer>SerialShop v1.0.0 · Python 기반 세션 관리 쇼핑몰</footer>
+</body>
+</html>

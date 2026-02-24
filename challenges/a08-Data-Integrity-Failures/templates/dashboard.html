@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <title>대시보드 - SerialShop</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#0d1117; color:#c9d1d9; font-family:'Courier New',monospace; }
+    nav {
+      background:#161b22; padding:16px 32px;
+      display:flex; justify-content:space-between; align-items:center;
+      border-bottom:1px solid #30363d;
+    }
+    nav .logo { color:#06b6d4; font-size:1.2rem; font-weight:bold; }
+    nav a { color:#8b949e; text-decoration:none; font-size:0.85rem; }
+    nav a:hover { color:#f85149; }
+    .container { max-width:700px; margin:60px auto; padding:0 24px; }
+    h1 { color:#f0f6fc; font-size:1.3rem; margin-bottom:8px; }
+    .sub { color:#8b949e; font-size:0.85rem; margin-bottom:28px; }
+    .card {
+      background:#161b22; border:1px solid #30363d;
+      border-radius:8px; padding:24px; margin-bottom:20px;
+    }
+    .card h2 { color:#f0f6fc; font-size:0.95rem; margin-bottom:14px; }
+    .tag {
+      display:inline-block; background:#1f2937;
+      border:1px solid #30363d; color:#8b949e;
+      padding:2px 8px; border-radius:4px; font-size:0.75rem;
+    }
+    .info {
+      background:#1c2128; border:1px solid #30363d;
+      border-radius:8px; padding:20px;
+      font-size:0.82rem; color:#8b949e; line-height:1.9;
+    }
+    .info strong { color:#06b6d4; }
+    .info code { background:#0d1117; padding:2px 6px; border-radius:4px; color:#06b6d4; }
+  </style>
+</head>
+<body>
+<nav>
+  <span class="logo">🛒 SerialShop</span>
+  <a href="/logout">로그아웃</a>
+</nav>
+<div class="container">
+  <h1>{{ user }} 님 환영합니다</h1>
+  <p class="sub">일반 사용자 권한으로 로그인되었습니다.</p>
+
+  <div class="card">
+    <h2>👤 내 계정 정보</h2>
+    <p style="font-size:0.85rem; color:#8b949e;">
+      사용자명: <strong style="color:#f0f6fc;">{{ user }}</strong><br/>
+      권한: <span class="tag">{{ role }}</span>
+    </p>
+  </div>
+
+  <div class="info">
+    💡 <strong>힌트:</strong> 로그인 후 세션이 직렬화되어 쿠키에 저장됩니다.<br/>
+    개발자 도구 → <code>Application</code> → <code>Cookies</code> 에서 <code>session_obj</code> 를 확인해보세요.<br/>
+    어떤 방식으로 직렬화되었는지 분석해보세요. Python 바이트 패턴이 보일 수도 있습니다.
+  </div>
+</div>
+</body>
+</html>

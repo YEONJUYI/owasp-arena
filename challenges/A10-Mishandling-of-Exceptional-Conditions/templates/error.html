@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <title>500 에러 - ErrorShop</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#0d1117; color:#c9d1d9; font-family:'Courier New',monospace; }
+    nav {
+      background:#161b22; padding:16px 32px;
+      display:flex; justify-content:space-between; align-items:center;
+      border-bottom:1px solid #30363d;
+    }
+    nav .logo { color:#f97316; font-size:1.2rem; font-weight:bold; }
+    nav a { color:#8b949e; text-decoration:none; font-size:0.85rem; }
+    nav a:hover { color:#f97316; }
+    .container { max-width:900px; margin:40px auto; padding:0 24px 60px; }
+    h1 { color:#f85149; font-size:1.3rem; margin-bottom:8px; }
+    .sub { color:#8b949e; font-size:0.85rem; margin-bottom:28px; }
+    .error-card {
+      background:#161b22; border:1px solid #f85149;
+      border-radius:8px; padding:24px; margin-bottom:20px;
+    }
+    .error-card h2 { color:#f85149; font-size:0.9rem; margin-bottom:12px; }
+    .error-val {
+      background:#010409; border:1px solid #30363d;
+      border-radius:6px; padding:12px 16px;
+      font-size:0.8rem; color:#f59e0b;
+      word-break:break-all; line-height:1.8; white-space:pre-wrap;
+    }
+    .schema-card {
+      background:#161b22; border:1px solid #f59e0b;
+      border-radius:8px; padding:24px; margin-bottom:20px;
+    }
+    .schema-card h2 { color:#f59e0b; font-size:0.9rem; margin-bottom:12px; }
+    .schema-val {
+      background:#010409; border:1px solid #30363d;
+      border-radius:6px; padding:12px 16px;
+      font-size:0.82rem; color:#f59e0b; line-height:1.8;
+    }
+    .flag-box {
+      background:#0f2a1a; border:1px solid #238636;
+      border-radius:10px; padding:28px;
+      text-align:center; margin-bottom:24px;
+    }
+    .flag-box h2 { color:#3fb950; font-size:1.1rem; margin-bottom:14px; }
+    .flag-val {
+      background:#0d1117; border:1px dashed #238636;
+      padding:14px 20px; border-radius:6px;
+      color:#3fb950; font-size:1rem;
+      letter-spacing:1px; word-break:break-all;
+    }
+    .info {
+      background:#161b22; border:1px solid #30363d;
+      border-radius:8px; padding:24px;
+    }
+    .info h3 { color:#f0f6fc; margin-bottom:16px; font-size:0.95rem; }
+    .info ul { list-style:none; }
+    .info li {
+      padding:10px 0; border-bottom:1px solid #21262d;
+      font-size:0.85rem; color:#8b949e; line-height:1.6;
+    }
+    .info li:last-child { border-bottom:none; }
+    .vuln { color:#f85149; }
+    .fix  { color:#3fb950; }
+  </style>
+</head>
+<body>
+<nav>
+  <span class="logo">🛒 ErrorShop</span>
+  <a href="/">← 목록으로</a>
+</nav>
+<div class="container">
+  <h1>⚠️ 500 Internal Server Error</h1>
+  <p class="sub">서버에서 예외가 발생했습니다. 아래에서 상세 정보를 확인하세요.</p>
+
+  {% if detail.error %}
+  <div class="error-card">
+    <h2>❌ 에러 메시지</h2>
+    <div class="error-val">{{ detail.error }}</div>
+  </div>
+  {% endif %}
+
+  {% if detail.query %}
+  <div class="error-card">
+    <h2>🗄️ 실행된 SQL 쿼리</h2>
+    <div class="error-val">{{ detail.query }}</div>
+  </div>
+  {% endif %}
+
+  {% if detail.db_schema %}
+  <div class="schema-card">
+    <h2>📋 DB 스키마 (내부 정보 노출)</h2>
+    <div class="schema-val">
+      테이블: {{ detail.db_schema }}<br/>
+      DB 경로: {{ detail.db_path }}<br/>
+      힌트: {{ detail.hint }}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if detail.traceback %}
+  <div class="error-card">
+    <h2>🔍 스택 트레이스</h2>
+    <div class="error-val">{{ detail.traceback }}</div>
+  </div>
+  {% endif %}
+
+  <div class="flag-box">
+    <h2>🚩 에러 메시지에서 내부 정보를 발견했습니다!</h2>
+    <p style="color:#8b949e; font-size:0.85rem; margin-bottom:14px">
+      secret 컬럼을 직접 조회해보세요: <code style="color:#3fb950">/product?id=1 UNION SELECT id,name,price,secret FROM products WHERE id=1</code>
+    </p>
+    <div class="flag-val" id="flagVal">↑ 위 URL로 접속하면 플래그를 획득할 수 있습니다</div>
+  </div>
+
+  <div class="info">
+    <h3>🔍 어떤 취약점이 있었나요?</h3>
+    <ul>
+      <li><span class="vuln">[취약점]</span> 예외 발생 시 스택 트레이스, DB 경로, 스키마 등 내부 정보가 그대로 노출되었습니다.</li>
+      <li><span class="vuln">[취약점]</span> 에러 메시지에서 DB 구조를 파악해 추가 공격(SQL Injection)이 가능해졌습니다.</li>
+      <li><span class="fix">[대응방안]</span> 프로덕션 환경에서는 사용자에게 일반적인 에러 메시지만 표시하세요.</li>
+      <li><span class="fix">[대응방안]</span> 상세 에러는 서버 내부 로그에만 기록하고 외부에 노출하지 마세요.</li>
+      <li><span class="fix">[대응방안]</span> try/except 에서 예외를 적절히 처리하고 민감 정보를 숨기세요.</li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

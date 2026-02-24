@@ -6,54 +6,38 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #0d1117; color: #c9d1d9; font-family: 'Courier New', monospace; }
-
     nav {
-      background: #161b22;
-      padding: 16px 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      background: #161b22; padding: 16px 32px;
+      display: flex; justify-content: space-between; align-items: center;
       border-bottom: 1px solid #30363d;
     }
     nav .logo { color: #f85149; font-size: 1.2rem; font-weight: bold; }
     nav span { color: #8b949e; font-size: 0.8rem; }
-
     .container { max-width: 800px; margin: 60px auto; padding: 0 24px; }
-
+    .error-box {
+      background: #3d1f1f; border: 1px solid #f85149;
+      border-radius: 10px; padding: 24px; text-align: center; margin-bottom: 32px;
+    }
+    .error-box p { color: #f85149; font-size: 0.9rem; }
     .flag-box {
-      background: #0f2a1a;
-      border: 1px solid #238636;
-      border-radius: 10px;
-      padding: 32px;
-      text-align: center;
-      margin-bottom: 32px;
+      background: #0f2a1a; border: 1px solid #238636;
+      border-radius: 10px; padding: 32px; text-align: center; margin-bottom: 32px;
     }
     .flag-box h2 { color: #3fb950; font-size: 1.2rem; margin-bottom: 16px; }
     .flag-box .flag {
-      background: #0d1117;
-      border: 1px dashed #238636;
-      padding: 14px 20px;
-      border-radius: 6px;
-      color: #3fb950;
-      font-size: 1.1rem;
-      letter-spacing: 1px;
-      word-break: break-all;
+      background: #0d1117; border: 1px dashed #238636;
+      padding: 14px 20px; border-radius: 6px;
+      color: #3fb950; font-size: 1.1rem; letter-spacing: 1px; word-break: break-all;
     }
-
     .info {
-      background: #161b22;
-      border: 1px solid #30363d;
-      border-radius: 8px;
-      padding: 24px;
+      background: #161b22; border: 1px solid #30363d;
+      border-radius: 8px; padding: 24px;
     }
     .info h3 { color: #f0f6fc; margin-bottom: 16px; font-size: 0.95rem; }
     .info ul { list-style: none; }
     .info li {
-      padding: 10px 0;
-      border-bottom: 1px solid #21262d;
-      font-size: 0.85rem;
-      color: #8b949e;
-      line-height: 1.6;
+      padding: 10px 0; border-bottom: 1px solid #21262d;
+      font-size: 0.85rem; color: #8b949e; line-height: 1.6;
     }
     .info li:last-child { border-bottom: none; }
     .vuln { color: #f85149; }
@@ -61,30 +45,34 @@
   </style>
 </head>
 <body>
-
 <nav>
   <span class="logo">⚠️ 관리자 페이지</span>
   <span>{{ user }} 님 (관리자 권한)</span>
 </nav>
-
 <div class="container">
+  {% if error %}
+  <div class="error-box">
+    <p>🚫 {{ error }}</p>
+  </div>
+  {% endif %}
+
+  {% if flag %}
   <div class="flag-box">
     <h2>🚩 축하합니다! 플래그를 찾았습니다!</h2>
     <div class="flag">{{ flag }}</div>
   </div>
-
   <div class="info">
     <h3>🔍 어떤 취약점이 있었나요?</h3>
     <ul>
-      <li><span class="vuln">[취약점]</span> Base64는 암호화가 아닌 단순 인코딩입니다. 누구나 디코딩하고 변조할 수 있습니다.</li>
-      <li><span class="vuln">[취약점]</span> 권한(role) 정보를 클라이언트 쿠키에 저장하면 변조에 취약합니다.</li>
-      <li><span class="vuln">[취약점]</span> 서버가 쿠키를 서명/검증 없이 그대로 신뢰했습니다.</li>
-      <li><span class="fix">[대응방안]</span> 세션 데이터는 서버에 저장하고, 쿠키에는 세션 ID만 담으세요.</li>
-      <li><span class="fix">[대응방안]</span> JWT를 사용한다면 강력한 시크릿 키로 서명하고 반드시 검증하세요.</li>
-      <li><span class="fix">[대응방안]</span> 민감한 권한 정보는 절대 클라이언트에 노출하지 마세요.</li>
+      <li><span class="vuln">[취약점]</span> MD5는 암호화가 아닌 단방향 해시 함수입니다. 레인보우 테이블과 사전 공격에 취약합니다.</li>
+      <li><span class="vuln">[취약점]</span> Salt 없이 MD5만 사용하면 동일한 비밀번호는 항상 동일한 해시값을 가집니다.</li>
+      <li><span class="vuln">[취약점]</span> /api/users 엔드포인트가 인증 없이 비밀번호 해시를 노출했습니다.</li>
+      <li><span class="fix">[대응방안]</span> bcrypt, Argon2 등 비밀번호 전용 해싱 알고리즘을 사용하세요.</li>
+      <li><span class="fix">[대응방안]</span> 반드시 Salt를 추가해 레인보우 테이블 공격을 방어하세요.</li>
+      <li><span class="fix">[대응방안]</span> 민감한 API 엔드포인트에는 반드시 인증을 적용하세요.</li>
     </ul>
   </div>
+  {% endif %}
 </div>
-
 </body>
 </html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <title>JWTBank - A07 챌린지</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#0d1117; color:#c9d1d9; font-family:'Courier New',monospace; }
+    nav {
+      background:#161b22; padding:16px 32px;
+      display:flex; justify-content:space-between; align-items:center;
+      border-bottom:1px solid #30363d;
+    }
+    nav .logo { color:#ec4899; font-size:1.2rem; font-weight:bold; }
+    nav a { color:#8b949e; text-decoration:none; margin-left:24px; font-size:0.9rem; }
+    nav a:hover { color:#ec4899; }
+    .hero { text-align:center; padding:80px 20px; }
+    .badge {
+      display:inline-block; background:#1f2937;
+      border:1px solid #ec4899; color:#ec4899;
+      padding:4px 12px; border-radius:9999px;
+      font-size:0.75rem; margin-bottom:20px;
+    }
+    .hero h1 { font-size:2.2rem; color:#f0f6fc; margin-bottom:14px; }
+    .hero p { color:#8b949e; font-size:0.95rem; max-width:480px; margin:0 auto 32px; line-height:1.7; }
+    .btn {
+      display:inline-block; background:#ec4899; color:#fff;
+      padding:12px 28px; border-radius:6px; text-decoration:none;
+      font-weight:bold; font-size:0.9rem;
+    }
+    .btn:hover { background:#db2777; }
+    .features {
+      display:flex; justify-content:center; gap:20px;
+      flex-wrap:wrap; padding:40px 32px 60px;
+    }
+    .feature {
+      background:#161b22; border:1px solid #30363d;
+      border-radius:8px; padding:24px; width:200px; text-align:center;
+    }
+    .feature .icon { font-size:2rem; margin-bottom:12px; }
+    .feature h3 { font-size:0.95rem; color:#f0f6fc; margin-bottom:8px; }
+    .feature p { font-size:0.8rem; color:#8b949e; }
+    footer {
+      text-align:center; padding:20px; color:#484f58;
+      font-size:0.75rem; border-top:1px solid #21262d;
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <span class="logo">🔑 JWTBank</span>
+  <div>
+    <a href="/">홈</a>
+    <a href="/login">로그인</a>
+  </div>
+</nav>
+<div class="hero">
+  <div class="badge">A07 · Authentication Failures</div>
+  <h1>JWTBank</h1>
+  <p>JWT 기반 인증 시스템입니다.<br/>토큰을 분석해서 관리자 권한을 얻을 수 있을까요?</p>
+  <a href="/login" class="btn">로그인하기 →</a>
+</div>
+<div class="features">
+  <div class="feature">
+    <div class="icon">🎫</div>
+    <h3>JWT 인증</h3>
+    <p>최신 JWT 토큰 기반 인증 시스템</p>
+  </div>
+  <div class="feature">
+    <div class="icon">🔐</div>
+    <h3>서명 검증</h3>
+    <p>토큰 위변조를 방지합니다... 아마도</p>
+  </div>
+  <div class="feature">
+    <div class="icon">👑</div>
+    <h3>권한 관리</h3>
+    <p>role 기반 접근 제어</p>
+  </div>
+</div>
+<footer>JWTBank v1.0.0 · JWT 기반 인증 서비스</footer>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <title>대시보드 - LoginBank</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#0d1117; color:#c9d1d9; font-family:'Courier New',monospace; }
+    nav {
+      background:#161b22; padding:16px 32px;
+      display:flex; justify-content:space-between; align-items:center;
+      border-bottom:1px solid #30363d;
+    }
+    nav .logo { color:#58a6ff; font-size:1.2rem; font-weight:bold; }
+    nav a { color:#8b949e; text-decoration:none; font-size:0.85rem; }
+    nav a:hover { color:#f85149; }
+    .container { max-width:700px; margin:60px auto; padding:0 24px; }
+    h1 { color:#f0f6fc; font-size:1.4rem; margin-bottom:8px; }
+    .sub { color:#8b949e; font-size:0.85rem; margin-bottom:32px; }
+    .flag-box {
+      background:#0f2a1a; border:1px solid #238636;
+      border-radius:10px; padding:32px;
+      text-align:center; margin-bottom:24px;
+    }
+    .flag-box h2 { color:#3fb950; font-size:1.1rem; margin-bottom:16px; }
+    .flag-value {
+      background:#0d1117; border:1px dashed #238636;
+      padding:14px 20px; border-radius:6px;
+      color:#3fb950; font-size:1.1rem;
+      letter-spacing:1px; word-break:break-all;
+    }
+    .normal-box {
+      background:#161b22; border:1px solid #30363d;
+      border-radius:10px; padding:32px;
+      text-align:center; margin-bottom:24px;
+    }
+    .normal-box h2 { color:#f0f6fc; font-size:1.1rem; margin-bottom:12px; }
+    .normal-box p { color:#8b949e; font-size:0.85rem; }
+    .info {
+      background:#161b22; border:1px solid #30363d;
+      border-radius:8px; padding:24px;
+    }
+    .info h3 { color:#f0f6fc; margin-bottom:16px; font-size:0.95rem; }
+    .info ul { list-style:none; }
+    .info li {
+      padding:10px 0; border-bottom:1px solid #21262d;
+      font-size:0.85rem; color:#8b949e; line-height:1.6;
+    }
+    .info li:last-child { border-bottom:none; }
+    .vuln { color:#f85149; }
+    .fix  { color:#3fb950; }
+  </style>
+</head>
+<body>
+<nav>
+  <span class="logo">🏦 LoginBank</span>
+  <a href="/logout">로그아웃</a>
+</nav>
+<div class="container">
+  <h1>{{ user }} 님 환영합니다</h1>
+  <p class="sub">권한: {{ role }}</p>
+
+  {% if role == 'admin' and flag %}
+  <div class="flag-box">
+    <h2>🚩 축하합니다! 관리자 계정 탈취 성공!</h2>
+    <div class="flag-value">{{ flag }}</div>
+  </div>
+  <div class="info">
+    <h3>🔍 어떤 취약점이 있었나요?</h3>
+    <ul>
+      <li><span class="vuln">[취약점]</span> 사용자 입력을 검증 없이 SQL 쿼리에 직접 삽입했습니다.</li>
+      <li><span class="vuln">[취약점]</span> <code>' OR '1'='1</code> 입력으로 WHERE 조건을 항상 참으로 만들었습니다.</li>
+      <li><span class="fix">[대응방안]</span> Prepared Statement (파라미터화 쿼리)를 사용하세요.</li>
+      <li><span class="fix">[대응방안]</span> ORM을 사용하면 SQL Injection을 근본적으로 방지할 수 있습니다.</li>
+    </ul>
+  </div>
+  {% else %}
+  <div class="normal-box">
+    <h2>일반 사용자 대시보드</h2>
+    <p>관리자 계정에 접근해야 플래그를 얻을 수 있습니다.</p>
+  </div>
+  {% endif %}
+</div>
+</body>
+</html>

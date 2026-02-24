@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <title>대시보드 - LogBank</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#0d1117; color:#c9d1d9; font-family:'Courier New',monospace; }
+    nav {
+      background:#161b22; padding:16px 32px;
+      display:flex; justify-content:space-between; align-items:center;
+      border-bottom:1px solid #30363d;
+    }
+    nav .logo { color:#22c55e; font-size:1.2rem; font-weight:bold; }
+    nav a { color:#8b949e; text-decoration:none; font-size:0.85rem; }
+    nav a:hover { color:#f85149; }
+    .container { max-width:700px; margin:60px auto; padding:0 24px; }
+    h1 { color:#f0f6fc; font-size:1.3rem; margin-bottom:24px; }
+    .card {
+      background:#161b22; border:1px solid #30363d;
+      border-radius:8px; padding:24px; margin-bottom:20px;
+      font-size:0.88rem; color:#8b949e; line-height:1.8;
+    }
+    .card h2 { color:#f0f6fc; font-size:0.95rem; margin-bottom:12px; }
+    .info {
+      background:#1c2128; border:1px solid #30363d;
+      border-radius:8px; padding:20px;
+      font-size:0.82rem; color:#8b949e; line-height:1.9;
+    }
+    .info strong { color:#22c55e; }
+  </style>
+</head>
+<body>
+<nav>
+  <span class="logo">📋 LogBank</span>
+  <a href="/logout">로그아웃</a>
+</nav>
+<div class="container">
+  <h1>{{ user }} 님 환영합니다</h1>
+  <div class="card">
+    <h2>📋 내 활동 내역</h2>
+    <p>모든 로그인/로그아웃 활동이 서버에 기록됩니다.<br/>
+    시스템 관리자만 로그를 볼 수 있습니다... 정말로요?</p>
+  </div>
+  <div class="info">
+    💡 <strong>힌트:</strong> 이 서비스는 모든 활동을 꼼꼼

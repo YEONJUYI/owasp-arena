@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <title>상품 상세 - ErrorShop</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#0d1117; color:#c9d1d9; font-family:'Courier New',monospace; }
+    nav {
+      background:#161b22; padding:16px 32px;
+      display:flex; justify-content:space-between; align-items:center;
+      border-bottom:1px solid #30363d;
+    }
+    nav .logo { color:#f97316; font-size:1.2rem; font-weight:bold; }
+    nav a { color:#8b949e; text-decoration:none; font-size:0.85rem; }
+    nav a:hover { color:#f97316; }
+    .container { max-width:600px; margin:60px auto; padding:0 24px; }
+    .card {
+      background:#161b22; border:1px solid #30363d;
+      border-radius:8px; padding:32px; text-align:center;
+    }
+    .icon { font-size:3rem; margin-bottom:16px; }
+    .name { color:#f0f6fc; font-size:1.3rem; margin-bottom:8px; }
+    .price { color:#f97316; font-size:1.1rem; margin-bottom:24px; }
+    .row {
+      display:flex; justify-content:space-between;
+      padding:10px 0; border-bottom:1px solid #21262d;
+      font-size:0.85rem;
+    }
+    .row:last-child { border-bottom:none; }
+    .label { color:#8b949e; }
+    .value { color:#f0f6fc; }
+    .error-msg {
+      background:#3d1f1f; border:1px solid #f85149;
+      border-radius:8px; padding:20px; color:#f85149; font-size:0.85rem;
+    }
+    .back { display:inline-block; margin-top:20px; color:#f97316; text-decoration:none; font-size:0.85rem; }
+  </style>
+</head>
+<body>
+<nav>
+  <span class="logo">🛒 ErrorShop</span>
+  <a href="/">← 목록으로</a>
+</nav>
+<div class="container">
+  {% if item %}
+  <div class="card">
+    <div class="icon">{{ '💻' if '노트북' in item[1] else '🖱️' if '마우스' in item[1] else '⌨️' }}</div>
+    <div class="name">{{ item[1] }}</div>
+    <div class="price">{{ '{:,}'.format(item[2]|int) }}원</div>
+    <div class="row">
+      <span class="label">상품 ID</span>
+      <span class="value">{{ item[0] }}</span>
+    </div>
+  </div>
+  {% elif error %}
+  <div class="error-msg">⚠️ {{ error }}</div>
+  {% endif %}
+  <a href="/" class="back">← 목록으로 돌아가기</a>
+</div>
+</body>
+</html>

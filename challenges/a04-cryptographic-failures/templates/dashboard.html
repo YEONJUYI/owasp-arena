@@ -6,92 +6,56 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #0d1117; color: #c9d1d9; font-family: 'Courier New', monospace; }
-
     nav {
-      background: #161b22;
-      padding: 16px 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      background: #161b22; padding: 16px 32px;
+      display: flex; justify-content: space-between; align-items: center;
       border-bottom: 1px solid #30363d;
     }
     nav .logo { color: #f59e0b; font-size: 1.2rem; font-weight: bold; }
-    nav span { color: #8b949e; font-size: 0.8rem; }
-
+    nav a { color: #8b949e; text-decoration: none; font-size: 0.85rem; }
+    nav a:hover { color: #f85149; }
     .container { max-width: 700px; margin: 60px auto; padding: 0 24px; }
-
     h1 { color: #f0f6fc; font-size: 1.4rem; margin-bottom: 8px; }
     .sub { color: #8b949e; font-size: 0.85rem; margin-bottom: 32px; }
-
     .card {
-      background: #161b22;
-      border: 1px solid #30363d;
-      border-radius: 8px;
-      padding: 24px;
-      margin-bottom: 20px;
+      background: #161b22; border: 1px solid #30363d;
+      border-radius: 8px; padding: 24px; margin-bottom: 20px;
     }
-    .card h2 { color: #f0f6fc; font-size: 0.95rem; margin-bottom: 16px; }
-
-    .cookie-box {
-      background: #010409;
-      border: 1px solid #30363d;
-      border-radius: 6px;
-      padding: 14px;
-      font-size: 0.8rem;
-      color: #f59e0b;
-      word-break: break-all;
-      line-height: 1.6;
+    .card h2 { color: #f0f6fc; font-size: 0.95rem; margin-bottom: 14px; }
+    .tag {
+      display: inline-block; background: #1f2937;
+      border: 1px solid #30363d; color: #8b949e;
+      padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; margin-right: 6px;
     }
-
-    .tip {
-      margin-top: 16px;
-      font-size: 0.78rem;
-      color: #484f58;
-    }
-    .tip code {
-      background: #161b22;
-      padding: 2px 6px;
-      border-radius: 4px;
-      color: #8b949e;
-    }
-
     .info {
-      background: #1c2128;
-      border: 1px solid #30363d;
-      border-radius: 8px;
-      padding: 20px;
-      font-size: 0.82rem;
-      color: #8b949e;
-      line-height: 1.8;
+      background: #1c2128; border: 1px solid #30363d;
+      border-radius: 8px; padding: 20px;
+      font-size: 0.82rem; color: #8b949e; line-height: 1.8;
     }
     .info strong { color: #f59e0b; }
+    .info code { background: #0d1117; padding: 2px 6px; border-radius: 4px; color: #f59e0b; }
   </style>
 </head>
 <body>
-
 <nav>
   <span class="logo">🏦 CryptoBank</span>
-  <span>{{ user }} 님 환영합니다</span>
+  <a href="/logout">로그아웃</a>
 </nav>
-
 <div class="container">
   <h1>내 대시보드</h1>
   <p class="sub">일반 사용자 권한으로 로그인되었습니다. 관리자 페이지에 접근하려면 권한이 필요합니다.</p>
-
   <div class="card">
-    <h2>🍪 내 세션 쿠키</h2>
-    <div class="cookie-box">{{ cookie }}</div>
-    <p class="tip">
-      브라우저 개발자 도구 → Application → Cookies 에서도 확인할 수 있습니다.<br/>
-      <code>atob("{{ cookie }}")</code> — 콘솔에서 디코딩해보세요.
+    <h2>👤 내 계정 정보</h2>
+    <p style="font-size:0.85rem; color:#8b949e;">
+      사용자명: <strong style="color:#f0f6fc;">{{ user }}</strong><br/>
+      권한: <span class="tag">일반 사용자</span>
     </p>
   </div>
-
   <div class="info">
-    💡 <strong>힌트:</strong> 세션 쿠키가 어떤 방식으로 만들어졌는지 분석해보세요.
-    Base64 디코딩 후 내용을 수정하고, 다시 인코딩해서 쿠키를 교체하면 어떻게 될까요?
+    💡 <strong>힌트:</strong> 이 서비스는 RESTful API를 제공합니다.
+    숨겨진 API 엔드포인트를 찾아보세요.
+    <code>/api/users</code> 같은 경로가 존재할 수도 있습니다.
   </div>
 </div>
-
 </body>
 </html>

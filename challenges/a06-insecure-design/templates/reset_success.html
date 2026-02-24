@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <title>재설정 성공 - ResetBank</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#0d1117; color:#c9d1d9; font-family:'Courier New',monospace; }
+    nav {
+      background:#161b22; padding:16px 32px;
+      display:flex; justify-content:space-between; align-items:center;
+      border-bottom:1px solid #30363d;
+    }
+    nav .logo { color:#a855f7; font-size:1rem; font-weight:bold; }
+    .container { max-width:700px; margin:60px auto; padding:0 24px; }
+    .flag-box {
+      background:#0f2a1a; border:1px solid #238636;
+      border-radius:10px; padding:32px;
+      text-align:center; margin-bottom:32px;
+    }
+    .flag-box h2 { color:#3fb950; font-size:1.2rem; margin-bottom:16px; }
+    .flag-value {
+      background:#0d1117; border:1px dashed #238636;
+      padding:14px 20px; border-radius:6px;
+      color:#3fb950; font-size:1.1rem;
+      letter-spacing:1px; word-break:break-all;
+    }
+    .info {
+      background:#161b22; border:1px solid #30363d;
+      border-radius:8px; padding:24px;
+    }
+    .info h3 { color:#f0f6fc; margin-bottom:16px; font-size:0.95rem; }
+    .info ul { list-style:none; }
+    .info li {
+      padding:10px 0; border-bottom:1px solid #21262d;
+      font-size:0.85rem; color:#8b949e; line-height:1.6;
+    }
+    .info li:last-child { border-bottom:none; }
+    .vuln { color:#f85149; }
+    .fix  { color:#3fb950; }
+  </style>
+</head>
+<body>
+<nav>
+  <span class="logo">⚠️ ResetBank</span>
+</nav>
+<div class="container">
+  <div class="flag-box">
+    <h2>🚩 축하합니다! 플래그를 찾았습니다!</h2>
+    <div class="flag-value">{{ flag }}</div>
+  </div>
+  <div class="info">
+    <h3>🔍 어떤 취약점이 있었나요?</h3>
+    <ul>
+      <li><span class="vuln">[취약점]</span> 비밀번호 재설정 토큰이 4자리 숫자(0000~9999)로 너무 짧아 브루트포스 가능합니다.</li>
+      <li><span class="vuln">[취약점]</span> 토큰 시도 횟수에 제한이 없어 자동화 공격이 가능합니다.</li>
+      <li><span class="vuln">[취약점]</span> 설계 단계에서 보안을 고려하지 않은 취약한 인증 흐름입니다.</li>
+      <li><span class="fix">[대응방안]</span> 재설정 토큰은 최소 128비트 이상의 암호학적 난수를 사용하세요.</li>
+      <li><span class="fix">[대응방안]</span> 일정 횟수 이상 실패 시 토큰을 무효화하고 계정을 잠그세요.</li>
+      <li><span class="fix">[대응방안]</span> 토큰 유효 시간을 짧게 설정하세요 (5~10분).</li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>
