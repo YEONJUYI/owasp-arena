@@ -4,7 +4,7 @@ import { FiHome } from 'react-icons/fi';
 import { Challenge } from '../types';
 import { ChallengeCard } from '../components/ChallengeCard';
 import { ProgressBar } from '../components/ProgressBar';
-import challengesData from '../data/challenges.json';
+import { challenges as challengesData } from '../config/challengesConfig'; // 이름 변경!
 
 export const Challenges: React.FC = () => {
   const [challenges, setChallenges] = useState<Challenge[]>([]);
@@ -12,7 +12,7 @@ export const Challenges: React.FC = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>('all');
 
   useEffect(() => {
-    setChallenges(challengesData.challenges as Challenge[]);
+    setChallenges(challengesData); // challengesData 사용!
   }, []);
 
   const categories = ['all', 'A01', 'A02', 'A03', 'A04', 'A05', 'A06', 'A07', 'A08', 'A09', 'A10'];

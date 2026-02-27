@@ -3,23 +3,45 @@ import { useParams, Link } from 'react-router-dom';
 import { FiArrowLeft, FiExternalLink, FiEye, FiCheck } from 'react-icons/fi';
 import { Challenge } from '../types';
 import { FlagSubmit } from '../components/FlagSubmit';
-import { StorageService } from '../utils/storage';
-import challengesData from '../data/challenges.json';
+import { supabase } from '../lib/supabase';
+import { useAuth } from '../contexts/AuthContext';
+import { challenges } from '../config/challengesConfig';
 
 export const ChallengeDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const { user } = useAuth();
   const [challenge, setChallenge] = useState<Challenge | null>(null);
   const [showHints, setShowHints] = useState<boolean[]>([]);
   const [isSolved, setIsSolved] = useState(false);
 
+  // 해결 상태 확인 함수
+  const checkSolvedStatus = async (challengeId: string) => {
+    if (!user) return;
+    
+    const { data } = await supabase
+      .from('progress')
+      .select('solved')
+      .eq('user_id', user.id)
+      .eq('challenge_id', challengeId)
+      .single();
+    
+    if (data?.solved) {
+      setIsSolved(true);
+    }
+  };
+
   useEffect(() => {
-    const found = (challengesData.challenges as Challenge[]).find(c => c.id === id);
+    const found = challenges.find(c => c.id === id);
     if (found) {
       setChallenge(found);
       setShowHints(new Array(found.hints.length).fill(false));
-      setIsSolved(StorageService.isSolved(found.id));
+      
+      if (user) {
+        checkSolvedStatus(found.id);
+      }
     }
-  }, [id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, user]);
 
   if (!challenge) {
     return (
@@ -40,13 +62,33 @@ export const ChallengeDetail: React.FC = () => {
     hard: 'bg-red-500'
   };
 
-  const toggleHint = (index: number) => {
+  const toggleHint = async (index: number) => {
     const newShowHints = [...showHints];
-    newShowHints[index] = !newShowHints[index];
+    const isOpening = !newShowHints[index];
+    newShowHints[index] = isOpening;
     setShowHints(newShowHints);
     
-    if (newShowHints[index]) {
-      StorageService.recordHintUsage(challenge.id);
+    // 힌트를 처음 열 때만 DB 업데이트
+    if (isOpening && user) {
+      const { data: currentProgress } = await supabase
+        .from('progress')
+        .select('hints_used')
+        .eq('user_id', user.id)
+        .eq('challenge_id', challenge.id)
+        .single();
+
+      const currentHints = currentProgress?.hints_used || 0;
+
+      await supabase
+        .from('progress')
+        .upsert({
+          user_id: user.id,
+          challenge_id: challenge.id,
+          hints_used: currentHints + 1,
+          solved: isSolved // 기존 해결 상태 유지
+        }, {
+          onConflict: 'user_id,challenge_id'
+        });
     }
   };
 
@@ -111,7 +153,7 @@ export const ChallengeDetail: React.FC = () => {
                 ))}
               </div>
 
-              
+              {/* 수정됨: <a> 태그 복구 */}
               <a
                 href={challenge.container_url}
                 target="_blank"
@@ -150,13 +192,14 @@ export const ChallengeDetail: React.FC = () => {
             <div className="bg-gray-800 border border-gray-700 rounded-lg p-6">
               <h3 className="text-xl font-bold mb-4">📚 참고 자료</h3>
               <div className="space-y-2">
+                {/* 수정됨: <a> 태그 복구 */}
                 <a
-                  href={`https://owasp.org/Top10/${challenge.category}/`}
+                  href="https://owasp.org/www-project-top-ten/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block text-blue-400 hover:underline"
                 >
-                  OWASP {challenge.category} 문서
+                  OWASP Top 10 문서
                 </a>
                 <a
                   href="https://portswigger.net/web-security"
