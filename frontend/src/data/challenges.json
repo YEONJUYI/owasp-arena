@@ -9,8 +9,9 @@
       "points": 100,
       "flagHash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
       "hints": [
-        "URL의 user_id 파라미터를 확인해보세요",
-        "user_id=1은 admin 계정입니다"
+        "세션은 인증되었지만, 권한 검증이 요청 본문(POST body)에만 의존합니다",
+        "Burp Suite Proxy를 켜고 브라우저에서 프로필 조회 시도 → /api/profile 요청을 Intercept",
+        "요청 body의 {\"user_id\": 2}를 {\"user_id\": 1}로 변조 후 Forward 또는 Repeater로 재전송"
       ],
       "container_url": "http://localhost:8001",
       "icon": "🔓",
@@ -25,8 +26,9 @@
       "points": 100,
       "flagHash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
       "hints": [
-        "일반적인 백업 파일 이름을 시도해보세요",
-        ".git 폴더나 .env 파일을 확인해보세요"
+        "웹 크롤러가 참고하는 표준 파일을 확인해보세요 (robots.txt, sitemap.xml 등)",
+        "/robots.txt에서 숨겨진 경로를 발견하면 해당 경로로 접근",
+        "기본 크리덴셜(admin/admin, admin/password 등)을 시도해보세요"
       ],
       "container_url": "http://localhost:8002",
       "icon": "⚙️",
@@ -41,8 +43,9 @@
       "points": 200,
       "flagHash": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
       "hints": [
-        "package.json의 의존성을 확인하세요",
-        "오래된 버전의 라이브러리가 있나요?"
+        "/package.json 파일로 의존성 목록 확인 → 'ld4sh' 패키지가 수상합니다",
+        "/node_modules/ld4sh/index.js 파일 접근 → 난독화된 코드에서 base64 문자열 발견",
+        "base64 디코딩으로 키 추출 → curl -X POST -H 'X-Telemetry-Key: 키값' http://localhost:8003/api/ld4sh/telemetry"
       ],
       "container_url": "http://localhost:8003",
       "icon": "📦",
@@ -57,8 +60,9 @@
       "points": 100,
       "flagHash": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
       "hints": [
-        "Base64는 암호화가 아닙니다",
-        "MD5는 안전하지 않습니다"
+        "/api/users 엔드포인트에 인증 없이 접근 가능 → MD5 해시 노출",
+        "crackstation.net 또는 hashcat으로 MD5 해시 크랙",
+        "크랙된 비밀번호로 admin 계정 로그인 → /admin 페이지에서 Flag"
       ],
       "container_url": "http://localhost:8004",
       "icon": "🔐",
@@ -73,8 +77,9 @@
       "points": 200,
       "flagHash": "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
       "hints": [
-        "OR 1=1 구문을 시도해보세요",
-        "주석 처리를 이용하세요 (-- 또는 #)"
+        "검색창에 작은따옴표(')를 입력해서 SQL 에러 유발 → 에러 메시지에서 쿼리 구조 파악",
+        "UNION SELECT 공격으로 다른 테이블 조회: ' UNION SELECT 1,key,value FROM secrets--",
+        "또는 Burp Suite로 요청 캡처 → sqlmap -r search.txt --dump으로 자동화"
       ],
       "container_url": "http://localhost:8005",
       "icon": "💉",
@@ -89,8 +94,9 @@
       "points": 300,
       "flagHash": "e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683",
       "hints": [
-        "결제 프로세스의 흐름을 분석하세요",
-        "Race Condition이 발생할 수 있나요?"
+        "비밀번호 재설정 요청 후 토큰 입력 폼 확인 → 4자리 숫자 (0000~1000)",
+        "Burp Suite Intruder로 /reset 엔드포인트에 토큰 브루트포스 공격",
+        "Payload type: Numbers (0~1000), Grep - Match로 'flag' 문자열 검색"
       ],
       "container_url": "http://localhost:8006",
       "icon": "🏗️",
@@ -105,8 +111,9 @@
       "points": 100,
       "flagHash": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
       "hints": [
-        "일반적인 비밀번호를 시도해보세요",
-        "Brute Force 공격을 고려하세요"
+        "user1로 로그인 후 개발자 도구 → Application → Cookies에서 'token' 값 복사",
+        "JWT 디코더(jwt.io)로 토큰 구조 확인 → {\"alg\":\"HS256\"} 를 {\"alg\":\"none\"}으로 변조",
+        "curl -H 'Authorization: Bearer 변조된토큰' http://localhost:8007/admin"
       ],
       "container_url": "http://localhost:8007",
       "icon": "🔑",
@@ -121,8 +128,9 @@
       "points": 200,
       "flagHash": "2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae",
       "hints": [
-        "쿠키의 내용을 확인하세요",
-        "Base64 디코딩 후 수정해보세요"
+        "user1로 로그인 후 개발자 도구에서 'session_obj' 쿠키 복사 → base64 디코딩하면 pickle 바이너리",
+        "Python으로 악성 pickle 페이로드 생성: pickle.dumps({'user':'admin','role':'admin'})",
+        "base64 인코딩 후 curl --cookie 'session_obj=페이로드' http://localhost:8008/admin"
       ],
       "container_url": "http://localhost:8008",
       "icon": "🔏",
@@ -137,8 +145,9 @@
       "points": 100,
       "flagHash": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7",
       "hints": [
-        "관리자 페이지가 로깅되지 않습니다",
-        "직접 URL에 접근해보세요"
+        "숨겨진 엔드포인트를 찾아야 합니다. 일반적인 로그 관련 경로를 추측하거나",
+        "gobuster로 스캔: gobuster dir -u http://localhost:8009 -w common.txt",
+        "/logs 엔드포인트 발견 → 인증 없이 접근 가능 → 로그에서 Flag와 관리자 비밀번호 노출"
       ],
       "container_url": "http://localhost:8009",
       "icon": "📝",
@@ -153,8 +162,9 @@
       "points": 200,
       "flagHash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
       "hints": [
-        "잘못된 입력으로 에러를 발생시키세요",
-        "스택 트레이스에 힌트가 있습니다"
+        "/product?id=abc 같은 잘못된 입력으로 SQL 에러 유발 → 에러 페이지에서 DB 스키마 노출",
+        "secret 컬럼 존재 확인 → UNION SELECT 공격으로 숨겨진 컬럼 조회",
+        "/product?id=1 UNION SELECT id,name,price,secret FROM products-- 로 Flag 추출"
       ],
       "container_url": "http://localhost:8010",
       "icon": "⚠️",
