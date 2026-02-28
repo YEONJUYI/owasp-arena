@@ -12,7 +12,7 @@
         "URL의 user_id 파라미터를 확인해보세요",
         "user_id=1은 admin 계정입니다"
       ],
-      "container_url": "http://localhost:8001",
+      "container_url": "https://owasp-a01-broken-access.onrender.com",
       "icon": "🔓",
       "tags": ["IDOR", "Access Control", "Parameter Tampering"]
     },
@@ -28,7 +28,7 @@
         "일반적인 백업 파일 이름을 시도해보세요",
         ".git 폴더나 .env 파일을 확인해보세요"
       ],
-      "container_url": "http://localhost:8002",
+      "container_url": "https://owasp-a02-misconfiguration.onrender.com",
       "icon": "⚙️",
       "tags": ["Misconfiguration", "Information Disclosure"]
     },
@@ -44,7 +44,7 @@
         "package.json의 의존성을 확인하세요",
         "오래된 버전의 라이브러리가 있나요?"
       ],
-      "container_url": "http://localhost:8003",
+      "container_url": "https://owasp-a03-supply-chain.onrender.com",
       "icon": "📦",
       "tags": ["Supply Chain", "Vulnerable Dependencies"]
     },
@@ -60,7 +60,7 @@
         "Base64는 암호화가 아닙니다",
         "MD5는 안전하지 않습니다"
       ],
-      "container_url": "http://localhost:8004",
+      "container_url": "https://owasp-a04-crypto-failures.onrender.com",
       "icon": "🔐",
       "tags": ["Cryptography", "Weak Encryption", "Hash Cracking"]
     },
@@ -76,7 +76,7 @@
         "OR 1=1 구문을 시도해보세요",
         "주석 처리를 이용하세요 (-- 또는 #)"
       ],
-      "container_url": "http://localhost:8005",
+      "container_url": "https://owasp-a05-injection.onrender.com",
       "icon": "💉",
       "tags": ["SQL Injection", "Authentication Bypass"]
     },
@@ -92,7 +92,7 @@
         "결제 프로세스의 흐름을 분석하세요",
         "Race Condition이 발생할 수 있나요?"
       ],
-      "container_url": "http://localhost:8006",
+      "container_url": "https://owasp-a06-insecure-design.onrender.com",
       "icon": "🏗️",
       "tags": ["Logic Flaw", "Race Condition", "Business Logic"]
     },
@@ -108,7 +108,7 @@
         "일반적인 비밀번호를 시도해보세요",
         "Brute Force 공격을 고려하세요"
       ],
-      "container_url": "http://localhost:8007",
+      "container_url": "https://owasp-a07-auth-failures.onrender.com",
       "icon": "🔑",
       "tags": ["Authentication", "Weak Password", "Brute Force"]
     },
@@ -124,7 +124,7 @@
         "쿠키의 내용을 확인하세요",
         "Base64 디코딩 후 수정해보세요"
       ],
-      "container_url": "http://localhost:8008",
+      "container_url": "https://owasp-a08-integrity-failures.onrender.com",
       "icon": "🔏",
       "tags": ["Integrity", "Cookie Manipulation", "Insecure Deserialization"]
     },
@@ -140,7 +140,7 @@
         "관리자 페이지가 로깅되지 않습니다",
         "직접 URL에 접근해보세요"
       ],
-      "container_url": "http://localhost:8009",
+      "container_url": "https://owasp-a09-logging-failures.onrender.com",
       "icon": "📝",
       "tags": ["Logging", "Monitoring", "Detection Bypass"]
     },
@@ -156,7 +156,7 @@
         "잘못된 입력으로 에러를 발생시키세요",
         "스택 트레이스에 힌트가 있습니다"
       ],
-      "container_url": "http://localhost:8010",
+      "container_url": "https://owasp-a10-exception.onrender.com",
       "icon": "⚠️",
       "tags": ["Exception Handling", "Error Messages", "Information Disclosure"]
     }
